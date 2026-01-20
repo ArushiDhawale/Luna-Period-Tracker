@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CycleFlow Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-rose-50 min-h-screen p-4 md:p-8">
+
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-6">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-rose-600">CycleFlow Tracker</h1>
+            <p class="text-gray-500">Log your dates & visualize your cycle</p>
+        </header>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <section class="space-y-4">
+                <div class="bg-rose-100 p-4 rounded-lg">
+                    <label class="block text-sm font-semibold text-rose-700 mb-2">Add Period Start Date:</label>
+                    <div class="flex gap-2">
+                        <input type="date" id="dateInput" class="w-full p-2 border border-rose-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500">
+                        <button onclick="addDate()" class="bg-rose-500 text-white px-4 py-2 rounded-md hover:bg-rose-600 transition">Add</button>
+                    </div>
+                </div>
+
+                <div class="stats bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <h3 class="font-bold text-gray-700">Insights</h3>
+                    <p class="text-gray-600">Avg Cycle: <span id="avgDisplay" class="font-mono text-rose-600">0</span> days</p>
+                </div>
+            </section>
+
+            <section>
+                <canvas id="cycleChart" width="400" height="250"></canvas>
+            </section>
+        </div>
+
+        <div class="mt-8">
+            <h3 class="font-bold text-gray-700 mb-4">Past Log</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b-2 border-rose-100">
+                            <th class="py-2 text-rose-600">Start Date</th>
+                            <th class="py-2 text-rose-600">Cycle Length</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let periodDates = JSON.parse(localStorage.getItem('periodDates')) || [];
+        let chart;
+
+        function addDate() {
+            const dateVal = document.getElementById('dateInput').value;
+            if (!dateVal) return;
+            
+            periodDates.push(dateVal);
+            periodDates.sort(); // Keep dates in order
+            localStorage.setItem('periodDates', JSON.stringify(periodDates));
+            updateUI();
+        }
+
+        function calculateCycles() {
+            let cycles = [];
+            for (let i = 1; i < periodDates.length; i++) {
+                const start = new Date(periodDates[i-1]);
+                const end = new Date(periodDates[i]);
+                const diffTime = Math.abs(end - start);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                cycles.push(diffDays);
+            }
+            return cycles;
+        }
+
+        function updateUI() {
+            const cycles = calculateCycles();
+            const avg = cycles.length > 0 ? (cycles.reduce((a, b) => a + b) / cycles.length).toFixed(1) : 0;
+            document.getElementById('avgDisplay').innerText = avg;
+
+            // Update Table
+            const tbody = document.getElementById('historyBody');
+            tbody.innerHTML = periodDates.map((d, i) => `
+                <tr class="border-b border-gray-100">
+                    <td class="py-2">${d}</td>
+                    <td class="py-2 text-gray-500">${cycles[i-1] ? cycles[i-1] + ' days' : '--'}</td>
+                </tr>
+            `).reverse().join('');
+
+            updateChart(cycles);
+        }
+
+        function updateChart(cycles) {
+            const ctx = document.getElementById('cycleChart').getContext('2d');
+            if (chart) chart.destroy();
+
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: cycles.map((_, i) => `Cycle ${i+1}`),
+                    datasets: [{
+                        label: 'Cycle Length (Days)',
+                        data: cycles,
+                        borderColor: '#f43f5e',
+                        backgroundColor: 'rgba(244, 63, 94, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    scales: { y: { beginAtZero: false, min: 20 } }
+                }
+            });
+        }
+
+        updateUI(); // Initial load
+    </script>
+</body>
+</html>
