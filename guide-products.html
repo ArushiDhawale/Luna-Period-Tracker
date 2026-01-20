@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hygiene Products - Luna</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style> 
+        body { font-family: 'Nunito', sans-serif; background-color: #f9fafb; } 
+        .product-card { transition: all 0.2s ease-in-out; }
+        .product-card:hover { border-color: #d8b4fe; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen text-slate-700">
+
+    <header class="bg-white text-purple-900 shadow-sm border-b border-gray-100 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2 group">
+                <i class="fas fa-moon text-2xl text-purple-600 group-hover:text-purple-700 transition"></i>
+                <h1 class="text-2xl font-bold tracking-wide group-hover:text-purple-700 transition">Luna</h1>
+            </a>
+            <nav class="hidden md:flex space-x-8 text-slate-500 font-medium text-sm">
+                <a href="index.html" class="hover:text-purple-600 transition">Home</a>
+                <a href="education.html" class="text-purple-600 font-bold">Education</a>
+                <a href="calendar.html" class="hover:text-purple-600 transition">Calendar</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-12 max-w-4xl">
+        
+        <div class="mb-8">
+            <a href="education.html" class="text-slate-400 hover:text-purple-600 text-sm font-semibold transition flex items-center">
+                <i class="fas fa-arrow-left mr-2 text-xs"></i> Back to Education Hub
+            </a>
+        </div>
+
+        <article class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 md:p-12">
+            
+            <header class="border-b border-gray-100 pb-8 mb-10">
+                <span class="text-purple-600 font-bold tracking-wider text-xs uppercase mb-2 block">Menstrual Health</span>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Hygiene Products</h1>
+                <p class="text-lg text-slate-600 leading-relaxed font-light">
+                    There is no single “best” menstrual hygiene product — only what feels safe, comfortable, and right for your body and lifestyle. Pads, tampons, and menstrual cups each have their own benefits. Understanding how they work can help you make informed choices.
+                </p>
+            </header>
+
+            <section class="mb-12 product-card border border-slate-100 rounded-lg p-8">
+                <div class="flex items-center mb-4">
+                    <div class="bg-purple-100 text-purple-600 rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-900">Sanitary Pads</h2>
+                </div>
+                
+                <p class="text-slate-600 mb-6 leading-relaxed">Pads are worn outside the body and absorb menstrual blood as it flows. They come in different sizes and absorbency levels.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-6">
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm uppercase mb-3 text-green-700">Benefits</h4>
+                        <ul class="text-sm text-slate-600 space-y-2">
+                            <li class="flex items-start"><i class="fas fa-check text-green-500 mt-1 mr-2 text-xs"></i> Easy to use; requires no insertion.</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-500 mt-1 mr-2 text-xs"></i> Excellent option for beginners.</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-500 mt-1 mr-2 text-xs"></i> No risk of Toxic Shock Syndrome (TSS).</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm uppercase mb-3 text-red-700">Limitations</h4>
+                        <ul class="text-sm text-slate-600 space-y-2">
+                            <li class="flex items-start"><i class="fas fa-minus text-red-400 mt-1 mr-2 text-xs"></i> Can feel bulky or shift during movement.</li>
+                            <li class="flex items-start"><i class="fas fa-minus text-red-400 mt-1 mr-2 text-xs"></i> May cause irritation if not changed often.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded border-l-4 border-purple-400">
+                    <h4 class="font-bold text-purple-900 text-sm mb-1">Safe Use Tips</h4>
+                    <p class="text-sm text-slate-600">Change pads every 4–6 hours, keep the area dry, and choose breathable materials to reduce discomfort.</p>
+                </div>
+            </section>
+
+            <section class="mb-12 product-card border border-slate-100 rounded-lg p-8">
+                <div class="flex items-center mb-4">
+                    <div class="bg-purple-100 text-purple-600 rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                        <i class="fas fa-capsule"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-900">Tampons</h2>
+                </div>
+                
+                <p class="text-slate-600 mb-6 leading-relaxed">Tampons are inserted into the vagina and absorb blood before it leaves the body.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-6">
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm uppercase mb-3 text-green-700">Benefits</h4>
+                        <ul class="text-sm text-slate-600 space-y-2">
+                            <li class="flex items-start"><i class="fas fa-check text-green-500 mt-1 mr-2 text-xs"></i> Discreet and comfortable.</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-500 mt-1 mr-2 text-xs"></i> Allows for swimming and physical activity.</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-500 mt-1 mr-2 text-xs"></i> Greater freedom of movement.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm uppercase mb-3 text-red-700">Limitations</h4>
+                        <ul class="text-sm text-slate-600 space-y-2">
+                            <li class="flex items-start"><i class="fas fa-exclamation-triangle text-red-400 mt-1 mr-2 text-xs"></i> Small risk of TSS if left in too long.</li>
+                            <li class="flex items-start"><i class="fas fa-minus text-red-400 mt-1 mr-2 text-xs"></i> May cause dryness for some users.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded border-l-4 border-purple-400">
+                    <h4 class="font-bold text-purple-900 text-sm mb-1">Safe Use Tips</h4>
+                    <ul class="text-sm text-slate-600 list-disc pl-4 space-y-1">
+                        <li>Use the lowest absorbency needed.</li>
+                        <li>Change every 4–8 hours.</li>
+                        <li><strong>Never</strong> sleep with a tampon for more than 8 hours.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="mb-12 product-card border border-slate-100 rounded-lg p-8">
+                <div class="flex items-center mb-4">
+                    <div class="bg-purple-100 text-purple-600 rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                        <i class="fas fa-wine-glass"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-900">Menstrual Cups</h2>
+                </div>
+                
+                <p class="text-slate-600 mb-6 leading-relaxed">Menstrual cups are reusable silicone or rubber cups inserted into the vagina to collect blood instead of absorbing it.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-6">
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm uppercase mb-3 text-green-700">Benefits</h4>
+                        <ul class="text-sm text-slate-600 space-y-2">
+                            <li class="flex items-start"><i class="fas fa-check text-green-500 mt-1 mr-2 text-xs"></i> Eco-friendly and cost-effective.</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-500 mt-1 mr-2 text-xs"></i> Can be worn for 8–12 hours.</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-500 mt-1 mr-2 text-xs"></i> Collects rather than absorbs.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm uppercase mb-3 text-red-700">Limitations</h4>
+                        <ul class="text-sm text-slate-600 space-y-2">
+                            <li class="flex items-start"><i class="fas fa-minus text-red-400 mt-1 mr-2 text-xs"></i> Requires proper cleaning.</li>
+                            <li class="flex items-start"><i class="fas fa-minus text-red-400 mt-1 mr-2 text-xs"></i> Steep learning curve for insertion.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded border-l-4 border-purple-400">
+                    <h4 class="font-bold text-purple-900 text-sm mb-1">Safe Use Tips</h4>
+                    <p class="text-sm text-slate-600">Sterilize the cup between cycles, wash hands before insertion/removal, and clean thoroughly after each use.</p>
+                </div>
+            </section>
+
+            <section class="mb-12 bg-red-50 border border-red-100 rounded-lg p-8">
+                <h3 class="text-xl font-bold text-red-800 mb-4">Understanding Toxic Shock Syndrome (TSS)</h3>
+                <p class="text-red-700 text-sm mb-4 leading-relaxed">
+                    TSS is a rare but serious condition caused by bacterial toxins. It has most commonly been linked to improper tampon use, though it is extremely rare.
+                </p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-bold text-red-800 text-sm mb-2">How to Reduce Risk:</h4>
+                        <ul class="text-sm text-red-700 space-y-1 list-disc pl-5">
+                            <li>Change tampons regularly.</li>
+                            <li>Avoid overnight use beyond recommended hours.</li>
+                            <li>Practice good hand hygiene.</li>
+                            <li>Switch to pads or cups occasionally.</li>
+                        </ul>
+                    </div>
+                    <div class="flex items-center">
+                        <p class="text-sm font-bold text-red-800 bg-white p-4 rounded border border-red-100 shadow-sm">
+                            <i class="fas fa-hospital-alt mr-2"></i> If you experience sudden fever, rash, dizziness, or vomiting during menstruation, seek medical help immediately.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="mb-10 text-center">
+                <h2 class="text-xl font-bold text-slate-900 mb-2">Which Product Is Best?</h2>
+                <p class="text-slate-600 text-sm max-w-2xl mx-auto">
+                    The best menstrual product is the one that fits your body, flow, and lifestyle. Many people switch products during their cycle — using pads at night, tampons during the day, or cups for longer wear. There’s no right or wrong choice.
+                </p>
+            </div>
+
+            <div class="bg-purple-600 text-white rounded-lg p-8 text-center shadow-lg">
+                <h3 class="text-xl font-bold mb-3"><i class="fas fa-heart mr-2"></i> A Gentle Reminder</h3>
+                <p class="text-purple-100 max-w-2xl mx-auto leading-relaxed">
+                    Menstrual hygiene is personal. What works for someone else may not work for you — and that’s completely okay. Comfort, safety, and confidence matter most.
+                </p>
+            </div>
+
+        </article>
+    </main>
+</body>
+</html>
