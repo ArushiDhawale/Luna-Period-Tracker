@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CycleSync - Support Circle</title>
+    <title>Luna - Support Circle</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <a href="index.html" class="flex items-center space-x-2">
                 <i class="fas fa-moon text-2xl"></i>
-                <h1 class="text-2xl font-bold tracking-wide">CycleSync</h1>
+                <h1 class="text-2xl font-bold tracking-wide">Luna</h1>
             </a>
             <nav class="hidden md:flex space-x-6 text-purple-100 font-semibold">
                 <a href="index.html" class="hover:text-white transition">Home</a>
@@ -30,37 +30,136 @@
     <main class="flex-grow container mx-auto px-4 py-8 max-w-4xl">
         <div class="bg-indigo-600 rounded-2xl p-8 text-white mb-8 text-center shadow-lg">
             <h2 class="text-3xl font-bold mb-2">Support Circle</h2>
-            <p class="opacity-90">Connect safely with others in your phase.</p>
+            <p class="opacity-90">Live Chat - Connect safely with others.</p>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-6">
-            <!-- Group Card 1 -->
-            <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition border border-purple-50 cursor-pointer">
-                <div class="flex justify-between items-start mb-4">
-                    <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-bold uppercase">Menstrual Phase</span>
-                    <span class="text-green-500 text-sm"><i class="fas fa-circle text-xs mr-1"></i> 24 Online</span>
+        <!-- Chat Container -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-purple-100 flex flex-col h-[500px]">
+            
+            <!-- Chat Header -->
+            <div class="bg-purple-50 p-4 border-b border-purple-100 flex justify-between items-center">
+                <div class="flex items-center">
+                    <span class="w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                    <h3 class="font-bold text-gray-700">General Chat</h3>
                 </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">The Cozy Corner</h3>
-                <p class="text-gray-500 text-sm mb-4">For those currently needing rest, warmth, and venting about cramps.</p>
-                <div class="flex -space-x-2 overflow-hidden mb-4">
-                    <div class="w-8 h-8 rounded-full bg-gray-300 border-2 border-white"></div>
-                    <div class="w-8 h-8 rounded-full bg-gray-400 border-2 border-white"></div>
-                    <div class="w-8 h-8 rounded-full bg-gray-500 border-2 border-white"></div>
-                </div>
-                <button class="w-full py-2 bg-purple-50 text-purple-600 font-bold rounded-lg hover:bg-purple-100 transition">Join Chat</button>
+                <span class="text-xs text-purple-400">Anonymous Mode</span>
             </div>
 
-            <!-- Group Card 2 -->
-            <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition border border-purple-50 cursor-pointer">
-                <div class="flex justify-between items-start mb-4">
-                    <span class="bg-fuchsia-100 text-fuchsia-700 px-3 py-1 rounded-full text-xs font-bold uppercase">Luteal Phase</span>
-                    <span class="text-green-500 text-sm"><i class="fas fa-circle text-xs mr-1"></i> 18 Online</span>
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">PMS Support</h3>
-                <p class="text-gray-500 text-sm mb-4">Feeling emotional? Anxious? Let's talk it out and support each other.</p>
-                <button class="w-full py-2 bg-fuchsia-50 text-fuchsia-600 font-bold rounded-lg hover:bg-fuchsia-100 transition">Join Chat</button>
+            <!-- Messages Area -->
+            <div id="messagesList" class="flex-grow p-4 overflow-y-auto space-y-4 bg-gray-50">
+                <!-- Messages will load here dynamically -->
+                <div class="text-center text-gray-400 text-sm mt-10">Loading chat...</div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="p-4 bg-white border-t border-purple-100">
+                <form id="chatForm" class="flex gap-2">
+                    <input type="text" id="messageInput" placeholder="Type a message..." class="flex-grow p-3 border border-purple-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 bg-purple-50/30" autocomplete="off">
+                    <button type="submit" class="bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition shadow-md font-bold">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
             </div>
         </div>
     </main>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        // TODO: PASTE YOUR FIREBASE CONFIG HERE
+        // It looks like: const firebaseConfig = { apiKey: "...", authDomain: "...", ... };
+        const firebaseConfig = {
+            // Paste your keys here!
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        const messagesList = document.getElementById('messagesList');
+        const chatForm = document.getElementById('chatForm');
+        const messageInput = document.getElementById('messageInput');
+        let currentUser = null;
+
+        // 1. Sign in Anonymously
+        signInAnonymously(auth).catch((error) => {
+            console.error("Auth Error:", error);
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                // Only load messages after we are logged in
+                loadMessages();
+            }
+        });
+
+        // 2. Load Messages (Real-time Listener)
+        function loadMessages() {
+            // Query the last 50 messages ordered by time
+            const q = query(collection(db, "messages"), orderBy("createdAt"), limit(50));
+
+            onSnapshot(q, (snapshot) => {
+                messagesList.innerHTML = ""; // Clear list to prevent duplicates on re-render
+                
+                if (snapshot.empty) {
+                    messagesList.innerHTML = '<div class="text-center text-gray-400 text-sm mt-10">No messages yet. Say hi!</div>';
+                }
+
+                snapshot.forEach((doc) => {
+                    const msg = doc.data();
+                    displayMessage(msg);
+                });
+                
+                // Auto scroll to bottom
+                messagesList.scrollTop = messagesList.scrollHeight;
+            });
+        }
+
+        // 3. Display a single message HTML
+        function displayMessage(msg) {
+            const isMe = msg.uid === currentUser.uid;
+            
+            const div = document.createElement('div');
+            div.className = `flex ${isMe ? 'justify-end' : 'justify-start'}`;
+            
+            const bubble = document.createElement('div');
+            bubble.className = `max-w-[70%] p-3 rounded-2xl text-sm ${
+                isMe 
+                ? 'bg-purple-600 text-white rounded-br-none' 
+                : 'bg-white border border-gray-200 text-gray-800 rounded-bl-none shadow-sm'
+            }`;
+            bubble.innerText = msg.text;
+
+            div.appendChild(bubble);
+            messagesList.appendChild(div);
+        }
+
+        // 4. Send Message
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const text = messageInput.value.trim();
+            
+            if (text && currentUser) {
+                try {
+                    await addDoc(collection(db, "messages"), {
+                        text: text,
+                        createdAt: serverTimestamp(),
+                        uid: currentUser.uid
+                    });
+                    messageInput.value = ""; // Clear input
+                } catch (err) {
+                    console.error("Error sending:", err);
+                    alert("Error sending message. Check console.");
+                }
+            }
+        });
+
+    </script>
 </body>
 </html>
