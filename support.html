@@ -117,9 +117,11 @@
         const displayCurrentName = document.getElementById('displayCurrentName');
 
         let currentUser = null;
-        let currentUsername = localStorage.getItem('luna_username') || "";
+        
+        // === 1. Updated: Check for Login Name OR Chat Name ===
+        // We now check 'luna_user_name' (from Login page) first
+        let currentUsername = localStorage.getItem('luna_user_name') || localStorage.getItem('luna_username') || "";
 
-        // === 1. Handle Username Logic ===
         function checkUsername() {
             if (!currentUsername) {
                 usernameModal.classList.remove('hidden');
@@ -133,7 +135,7 @@
             const name = nameInput.value.trim();
             if (name) {
                 currentUsername = name;
-                localStorage.setItem('luna_username', name); // Save to browser
+                localStorage.setItem('luna_username', name); // Save to browser for guests
                 displayCurrentName.innerText = name;
                 usernameModal.classList.add('hidden');
                 startChat();
@@ -217,7 +219,7 @@
                         text: text,
                         createdAt: serverTimestamp(),
                         uid: currentUser.uid,
-                        username: currentUsername // <--- Sending the name to DB here
+                        username: currentUsername // <--- Sends the logged-in name
                     });
                     messageInput.value = "";
                 } catch (err) {

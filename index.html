@@ -20,13 +20,22 @@
                 <i class="fas fa-moon text-2xl"></i>
                 <h1 class="text-2xl font-bold tracking-wide">Luna</h1>
             </a>
-            <nav class="hidden md:flex space-x-6 text-purple-100 font-semibold">
+            
+            <nav class="hidden md:flex items-center space-x-6 text-purple-100 font-semibold">
                 <a href="index.html" class="text-white border-b-2 border-white">Home</a>
                 <a href="calendar.html" class="hover:text-white transition">Calendar</a>
                 <a href="education.html" class="hover:text-white transition">Education</a>
                 <a href="support.html" class="hover:text-white transition">Support</a>
                 <a href="journal.html" class="hover:text-white transition">Journal</a>
+                
+                <!-- Login/Logout Section -->
+                <div id="authSection" class="ml-4">
+                    <a href="login.html" class="bg-white text-purple-600 px-4 py-2 rounded-full font-bold hover:bg-gray-100 transition shadow-sm text-sm">
+                        Login
+                    </a>
+                </div>
             </nav>
+
             <div class="md:hidden">
                 <i class="fas fa-bars text-xl"></i>
             </div>
@@ -36,6 +45,11 @@
     <!-- MAIN CONTENT -->
     <main class="flex-grow container mx-auto px-4 py-8 flex flex-col items-center">
         
+        <!-- Welcome Message (Hidden by default) -->
+        <div id="welcomeMsg" class="w-full max-w-4xl mb-6 hidden">
+            <h2 class="text-2xl font-bold text-gray-700">Hello, <span id="userNameDisplay" class="text-purple-600">User</span>! 👋</h2>
+        </div>
+
         <!-- Input Section -->
         <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 mb-8 border border-purple-100">
             <h2 class="text-xl font-bold text-purple-800 mb-4 text-center">Track Your Cycle</h2>
@@ -84,6 +98,35 @@
     </footer>
 
     <script>
+        // === LOGIN STATE LOGIC ===
+        document.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = localStorage.getItem('luna_is_logged_in');
+            const userName = localStorage.getItem('luna_user_name');
+            const authSection = document.getElementById('authSection');
+            const welcomeMsg = document.getElementById('welcomeMsg');
+
+            if (isLoggedIn === 'true') {
+                // Show Logout Button
+                authSection.innerHTML = `
+                    <button onclick="logout()" class="text-purple-100 hover:text-white font-semibold text-sm">
+                        Logout <i class="fas fa-sign-out-alt ml-1"></i>
+                    </button>
+                `;
+                // Show Welcome Message
+                if (userName) {
+                    document.getElementById('userNameDisplay').innerText = userName;
+                    welcomeMsg.classList.remove('hidden');
+                }
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('luna_is_logged_in');
+            localStorage.removeItem('luna_user_name');
+            window.location.reload();
+        }
+
+        // === EXISTING TRACKER LOGIC ===
         const phaseData = {
             menstrual: { diet: "Iron-rich foods, warm teas, and dark chocolate to boost mood.", routine: "Rest, light walking, or Yin Yoga. Listen to your body." },
             follicular: { diet: "Fermented foods (kimchi, yogurt), lean proteins, and seeds.", routine: "High energy! Cardio, running, and creative tasks." },
