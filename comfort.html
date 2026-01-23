@@ -45,45 +45,40 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-between text-gray-800">
 
-    <header class="w-full p-6 flex justify-between items-center">
-        <a href="index.html" class="text-purple-600 hover:text-purple-800 transition">
-            <i class="fas fa-arrow-left mr-2"></i> Back to Home
-        </a>
-        <h1 class="text-xl font-bold text-purple-800 tracking-widest uppercase">Comfort Zone</h1>
-        <div class="w-10"></div> </header>
+    <div id="navbar-placeholder" class="w-full"></div>
 
-    <main class="flex flex-col items-center text-center px-4">
+    <main class="flex flex-col items-center text-center px-4 mt-8 flex-grow justify-center">
         <div class="breath-orb w-48 h-48 md:w-64 md:h-64 bg-purple-400 rounded-full mb-8 flex items-center justify-center">
             <span id="breathText" class="text-white font-semibold text-xl">Breathe In</span>
         </div>
         <h2 class="text-2xl font-bold text-purple-900 mb-2">Find Your Calm</h2>
         <p class="text-purple-600 max-w-xs">Rest your eyes, listen to the rhythm, and just exist for a moment.</p>
+
+        <div class="mt-8 mb-4">
+            <p class="text-sm text-purple-400 uppercase tracking-widest mb-4">How are you feeling?</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="applyMood('anxious')" class="flex flex-col items-center p-3 bg-white rounded-2xl shadow-sm hover:shadow-md transition w-20">
+                    <span class="text-2xl mb-1">😟</span>
+                    <span class="text-[10px] font-bold uppercase">Anxious</span>
+                </button>
+
+                <button onclick="applyMood('tired')" class="flex flex-col items-center p-3 bg-white rounded-2xl shadow-sm hover:shadow-md transition w-20">
+                    <span class="text-2xl mb-1">🥱</span>
+                    <span class="text-[10px] font-bold uppercase">Tired</span>
+                </button>
+
+                <button onclick="applyMood('crampy')" class="flex flex-col items-center p-3 bg-white rounded-2xl shadow-sm hover:shadow-md transition w-20">
+                    <span class="text-2xl mb-1">😣</span>
+                    <span class="text-[10px] font-bold uppercase">In Pain</span>
+                </button>
+
+                <button onclick="applyMood('happy')" class="flex flex-col items-center p-3 bg-white rounded-2xl shadow-sm hover:shadow-md transition w-20">
+                    <span class="text-2xl mb-1">✨</span>
+                    <span class="text-[10px] font-bold uppercase">Energy</span>
+                </button>
+            </div>
+        </div>
     </main>
-
-    <div class="mt-8 mb-4">
-    <p class="text-sm text-purple-400 uppercase tracking-widest mb-4">How are you feeling?</p>
-    <div class="flex flex-wrap justify-center gap-4">
-        <button onclick="applyMood('anxious')" class="flex flex-col items-center p-3 bg-white rounded-2xl shadow-sm hover:shadow-md transition w-20">
-            <span class="text-2xl mb-1">😟</span>
-            <span class="text-[10px] font-bold uppercase">Anxious</span>
-        </button>
-
-        <button onclick="applyMood('tired')" class="flex flex-col items-center p-3 bg-white rounded-2xl shadow-sm hover:shadow-md transition w-20">
-            <span class="text-2xl mb-1">🥱</span>
-            <span class="text-[10px] font-bold uppercase">Tired</span>
-        </button>
-
-        <button onclick="applyMood('crampy')" class="flex flex-col items-center p-3 bg-white rounded-2xl shadow-sm hover:shadow-md transition w-20">
-            <span class="text-2xl mb-1">😣</span>
-            <span class="text-[10px] font-bold uppercase">In Pain</span>
-        </button>
-
-        <button onclick="applyMood('happy')" class="flex flex-col items-center p-3 bg-white rounded-2xl shadow-sm hover:shadow-md transition w-20">
-            <span class="text-2xl mb-1">✨</span>
-            <span class="text-[10px] font-bold uppercase">Energy</span>
-        </button>
-    </div>
-</div>
 
     <footer class="w-full max-w-xl p-8">
         <div class="bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl p-6 border border-white">
@@ -110,93 +105,88 @@
             </div>
         </div>
     </footer>
+
+    <script src="loadNavbar.js"></script> 
+
     <script>
     const moods = {
-    anxious: {
-        color: "#cffafe", // Light Blue
-        trackName: "Slow Ocean Waves",
-        trackUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-        breathSpeed: 10 // seconds
-    },
-    tired: {
-        color: "#f3e8ff", // Soft Purple
-        trackName: "Midnight Lofi",
-        trackUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-        breathSpeed: 8
-    },
-    crampy: {
-        color: "#ffedd5", // Warm Peach
-        trackName: "Deep Resonance",
-        trackUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-        breathSpeed: 7
-    },
-    happy: {
-        color: "#dcfce7", // Fresh Green
-        trackName: "Morning Piano",
-        trackUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
-        breathSpeed: 5
-    }
-};
-
-let audio = new Audio();
-let isPlaying = false;
-let breathInterval; // Stores the timer so we can reset it
-const breathText = document.getElementById('breathText');
-
-// The function that handles the text flip
-function startBreathingLogic(seconds) {
-    // Clear any existing timer first
-    if (breathInterval) clearInterval(breathInterval);
-
-    const msPerPhase = (seconds / 2) * 1000;
-
-    const flipText = () => {
-        breathText.innerText = "Breathe In";
-        setTimeout(() => {
-            breathText.innerText = "Breathe Out";
-        }, msPerPhase);
+        anxious: {
+            color: "#cffafe", // Light Blue
+            trackName: "Slow Ocean Waves",
+            trackUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+            breathSpeed: 10 // seconds
+        },
+        tired: {
+            color: "#f3e8ff", // Soft Purple
+            trackName: "Midnight Lofi",
+            trackUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+            breathSpeed: 8
+        },
+        crampy: {
+            color: "#ffedd5", // Warm Peach
+            trackName: "Deep Resonance",
+            trackUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+            breathSpeed: 7
+        },
+        happy: {
+            color: "#dcfce7", // Fresh Green
+            trackName: "Morning Piano",
+            trackUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+            breathSpeed: 5
+        }
     };
 
-    flipText(); // Run once immediately
-    breathInterval = setInterval(flipText, seconds * 1000);
-}
+    let audio = new Audio();
+    let isPlaying = false;
+    let breathInterval; 
+    const breathText = document.getElementById('breathText');
 
-function applyMood(moodKey) {
-    const selected = moods[moodKey];
-    const orb = document.querySelector('.breath-orb');
-    
-    // 1. Update the Speed of Animations
-    orb.style.animationDuration = selected.breathSpeed + "s";
-    document.body.style.animationDuration = selected.breathSpeed + "s";
-    
-    // 2. Update the Text Sync
-    startBreathingLogic(selected.breathSpeed);
+    function startBreathingLogic(seconds) {
+        if (breathInterval) clearInterval(breathInterval);
 
-    // 3. Update the Background Color
-    // We override the animation's base color by injecting a small style change
-    document.body.style.backgroundColor = selected.color;
+        const msPerPhase = (seconds / 2) * 1000;
 
-    // 4. Update Music
-    audio.src = selected.trackUrl;
-    document.getElementById('trackName').innerText = selected.trackName;
-    if (isPlaying) audio.play();
-}
+        const flipText = () => {
+            breathText.innerText = "Breathe In";
+            setTimeout(() => {
+                breathText.innerText = "Breathe Out";
+            }, msPerPhase);
+        };
 
-function togglePlay() {
-    const icon = document.getElementById('playIcon');
-    if (isPlaying) {
-        audio.pause();
-        icon.classList.replace('fa-pause', 'fa-play');
-    } else {
-        if(!audio.src) applyMood('tired'); 
-        audio.play();
-        icon.classList.replace('fa-play', 'fa-pause');
+        flipText();
+        breathInterval = setInterval(flipText, seconds * 1000);
     }
-    isPlaying = !isPlaying;
-}
 
-// Start default breathing on page load
-startBreathingLogic(8);
-</script>
+    function applyMood(moodKey) {
+        const selected = moods[moodKey];
+        const orb = document.querySelector('.breath-orb');
+        
+        orb.style.animationDuration = selected.breathSpeed + "s";
+        document.body.style.animationDuration = selected.breathSpeed + "s";
+        
+        startBreathingLogic(selected.breathSpeed);
+
+        document.body.style.backgroundColor = selected.color;
+
+        audio.src = selected.trackUrl;
+        document.getElementById('trackName').innerText = selected.trackName;
+        if (isPlaying) audio.play();
+    }
+
+    function togglePlay() {
+        const icon = document.getElementById('playIcon');
+        if (isPlaying) {
+            audio.pause();
+            icon.classList.replace('fa-pause', 'fa-play');
+        } else {
+            if(!audio.src) applyMood('tired'); 
+            audio.play();
+            icon.classList.replace('fa-play', 'fa-pause');
+        }
+        isPlaying = !isPlaying;
+    }
+
+    startBreathingLogic(8);
+    </script>
 </body>
 </html>

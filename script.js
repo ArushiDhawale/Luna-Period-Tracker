@@ -25,11 +25,11 @@ function calculateCycle() {
     const lastStart = new Date(input);
     const today = new Date();
     
-    // 1. Predict Next Period (Standard 28-day cycle)
+    // Predict Next Period (Standard 28-day cycle)
     const nextPeriod = new Date(lastStart);
     nextPeriod.setDate(lastStart.getDate() + 28);
     
-    // 2. Determine Current Phase
+    //Current Phase
     const diffTime = Math.abs(today - lastStart);
     const dayOfCycle = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) % 28; // Modulo 28 for recurring cycles
 
